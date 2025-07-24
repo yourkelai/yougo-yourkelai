@@ -1,5 +1,6 @@
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -20,8 +21,13 @@ module.exports = {
     new Dotenv({
       systemvars: true,
     }),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      filename: 'index.html',
+      publicPath: '/'
+    })
   ],
-  // 添加完整的 devServer 配置
+  // devServer配置（与plugins平级）
   devServer: {
     static: {
       directory: path.join(__dirname, 'public'),
@@ -29,8 +35,8 @@ module.exports = {
     compress: true,
     port: 9000,
     historyApiFallback: true,
-    open: true, // 自动打开浏览器
-    hot: true,  // 启用热模块替换
+    open: true,
+    hot: true,
     client: {
       overlay: {
         errors: true,
